@@ -1,18 +1,29 @@
 #include <Arduino.h>
+#include <Adafruit_BME680.h>
 
-// put function declarations here:
-int myFunction(int, int);
+Adafruit_BME680 sensorBME;
 
-void setup() {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+void setup() 
+{
+  Serial.begin(115200); delay(500);
+  Serial.println("Projeto IOT - Parte Bento");
+
+  if (!sensorBME.begin()) 
+  { 
+    Serial.println("Erro no sensor BME"); 
+    while (true); 
+  } 
+
+  // aumenta amostragem dos sensores (1X, 2X, 4X, 8X, 16X ou NONE) 
+  sensorBME.setTemperatureOversampling(BME680_OS_8X); 
+  sensorBME.setHumidityOversampling(BME680_OS_2X); 
+
 }
 
-void loop() {
-  // put your main code here, to run repeatedly:
-}
+void loop() 
+{
+  sensorBME.performReading();
 
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
+  float temperatura = sensorBME.temperature; 
+  float umidade = sensorBME.humidity;
 }
