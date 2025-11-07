@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro de Aulas</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+        body {
+            box-sizing: border-box;
+            font-family: 'Inter', -webkit-system-font, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        .form-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .form-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .form-card:active {
+            transform: translateY(-2px);
+        }
+        
+        .icon-container {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 2rem;
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .announcement-banner {
+            background: linear-gradient(90deg, #fbbf24 0%, #f59e0b 100%);
+            animation: slideIn 0.5s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .quick-stats {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+    </style>
+ </head>
+ <body class="min-h-full bg-gray-50">
+  <!-- Main Content -->
+   <main class="max-w-6xl mx-auto px-4 py-12">
+    <!-- Forms Section -->
+    <div class="mb-12">
+     <h2 class="text-3xl font-bold text-gray-900 text-center mb-8">Cadastro de Aulas</h2>
+     <!-- Forms Grid -->
+     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Student Registration -->
+      <a class="form-card bg-white rounded-lg shadow-sm border border-gray-200 p-6 text-center" href="/aulas/add">
+       <div class="icon-container"><span>📚</span>
+       </div>
+       <h3 class="text-xl font-semibold text-gray-900 mb-3">Cadastrar nova Aula</h3>
+       <p class="text-gray-600 mb-4">Cadastre uma nova aula</p>
+      </a>
+      <!-- Class Registration -->
+      <a class="form-card bg-white rounded-lg shadow-sm border border-gray-200 p-6 text-center" href="/aulas/edit">
+       <div class="icon-container"><span>🕐</span>
+       </div>
+       <h3 class="text-xl font-semibold text-gray-900 mb-3">Adicionar Turma</h3>
+       <p class="text-gray-600 mb-4">Cadastre uma turma e seus horários na aula</p>
+      </a>
+      <!-- Class Registration -->
+      <a class="form-card bg-white rounded-lg shadow-sm border border-gray-200 p-6 text-center" href="/aulas/get2">
+        <div class="icon-container"><span>📕</span>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-900 mb-3">Listar Turmas</h3>
+        <p class="text-gray-600 mb-4">Listar todas as aulas do banco de dados</p>
+       </a>
+     </div>
+    </div>
+   </main>
+  <script>
+        // Default configuration
+        const defaultConfig = {
+            school_name: "Lincoln Elementary School",
+            school_motto: "Excellence in Education",
+            principal_name: "Dr. Sarah Johnson",
+            welcome_message: "Welcome to our school portal. Access forms, submit applications, and stay connected with our school community.",
+            footer_text: "© 2024 Lincoln Elementary School. All rights reserved."
+        };
+
+        // Element SDK configuration
+        const elementConfig = {
+            defaultConfig,
+            onConfigChange: async (config) => {
+                document.getElementById('school-name').textContent = config.school_name || defaultConfig.school_name;
+                document.getElementById('school-motto').textContent = config.school_motto || defaultConfig.school_motto;
+                document.getElementById('principal-name').textContent = config.principal_name || defaultConfig.principal_name;
+                document.getElementById('welcome-message').textContent = config.welcome_message || defaultConfig.welcome_message;
+                document.getElementById('footer-text').textContent = config.footer_text || defaultConfig.footer_text;
+            },
+            mapToCapabilities: (config) => ({
+                recolorables: [],
+                borderables: [],
+                fontEditable: undefined,
+                fontSizeable: undefined
+            }),
+            mapToEditPanelValues: (config) => new Map([
+                ["school_name", config.school_name || defaultConfig.school_name],
+                ["school_motto", config.school_motto || defaultConfig.school_motto],
+                ["principal_name", config.principal_name || defaultConfig.principal_name],
+                ["welcome_message", config.welcome_message || defaultConfig.welcome_message],
+                ["footer_text", config.footer_text || defaultConfig.footer_text]
+            ])
+        };
+
+        // Form information
+        const formInfo = {
+            'student-registration': {
+                title: 'Student Registration Form',
+                description: 'This form collects basic information for new student enrollment including personal details, previous school information, and parent/guardian contacts.'
+            },
+            'parent-contact': {
+                title: 'Parent Contact Form',
+                description: 'Update or provide current contact information for parents and guardians including phone numbers, email addresses, and emergency contacts.'
+            },
+            'field-trip': {
+                title: 'Field Trip Permission Form',
+                description: 'Grant permission for your child to participate in upcoming field trips and educational excursions outside of school grounds.'
+            },
+            'lunch-program': {
+                title: 'School Lunch Program Application',
+                description: 'Apply for free or reduced-price school meals based on family income and household size qualifications.'
+            },
+            'after-school': {
+                title: 'After School Activities Registration',
+                description: 'Register your child for sports teams, academic clubs, arts programs, and other extracurricular activities.'
+            },
+            'teacher-feedback': {
+                title: 'Teacher Feedback Form',
+                description: 'Share your thoughts and feedback about your child\'s educational experience, teacher performance, and suggestions for improvement.'
+            },
+            'volunteer': {
+                title: 'Volunteer Application Form',
+                description: 'Apply to become a school volunteer for events, classroom assistance, field trip chaperoning, and other community activities.'
+            },
+            'transportation': {
+                title: 'Transportation Request Form',
+                description: 'Request bus transportation services or update pickup/drop-off locations for your child\'s daily commute to school.'
+            },
+            'emergency-contact': {
+                title: 'Emergency Contact Update Form',
+                description: 'Update emergency contact information, medical conditions, allergies, and other critical safety information for your child.'
+            }
+        };
+
+        // Quick links information
+        const linkInfo = {
+            'calendar': {
+                title: 'School Calendar',
+                description: 'View important dates including holidays, parent-teacher conferences, testing schedules, and school events.'
+            },
+            'grades': {
+                title: 'Student Grades Portal',
+                description: 'Access your child\'s current grades, assignment scores, attendance records, and progress reports.'
+            },
+            'library': {
+                title: 'Library Resources',
+                description: 'Browse the school library catalog, reserve books, access digital resources, and view reading programs.'
+            },
+            'contact': {
+                title: 'Contact Information',
+                description: 'Find phone numbers, email addresses, and office hours for teachers, administrators, and support staff.'
+            }
+        };
+
+        let currentFormType = '';
+
+        // Initialize Element SDK
+        async function initializeApp() {
+            if (window.elementSdk) {
+                await window.elementSdk.init(elementConfig);
+            }
+        }
+
+        // Form handling functions
+        function openForm(formType) {
+            currentFormType = formType;
+            const info = formInfo[formType];
+            
+            document.getElementById('modal-title').textContent = info.title;
+            document.getElementById('modal-description').textContent = info.description;
+            document.getElementById('form-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('form-modal').classList.add('hidden');
+            currentFormType = '';
+        }
+
+        function proceedToForm() {
+            // In a real application, this would navigate to the actual form
+            showNotification(`Opening ${formInfo[currentFormType].title}...`, 'info');
+            closeModal();
+        }
+
+        // Quick links handling
+        function showInfo(linkType) {
+            const info = linkInfo[linkType];
+            
+            document.getElementById('info-title').textContent = info.title;
+            document.getElementById('info-description').textContent = info.description;
+            document.getElementById('info-modal').classList.remove('hidden');
+        }
+
+        function closeInfoModal() {
+            document.getElementById('info-modal').classList.add('hidden');
+        }
+
+        // Notification system
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 z-50 px-6 py-3 rounded-lg text-white font-medium ${
+                type === 'success' ? 'bg-green-600' : 
+                type === 'error' ? 'bg-red-600' : 'bg-blue-600'
+            }`;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // Close modals when clicking outside
+        document.getElementById('form-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'form-modal') {
+                closeModal();
+            }
+        });
+
+        document.getElementById('info-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'info-modal') {
+                closeInfoModal();
+            }
+        });
+
+        // Initialize app when page loads
+        document.addEventListener('DOMContentLoaded', initializeApp);
+    </script>
+</html>
